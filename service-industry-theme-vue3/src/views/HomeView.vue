@@ -15,7 +15,6 @@ import IndexComponent from "@/components/IndexComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 
-import { loadAllScripts } from "../utils/loadAllScript";
 
 export default {
   name: "HomeView",
@@ -25,7 +24,6 @@ export default {
     FooterComponent,
   },
   mounted() {
-    loadAllScripts();
   },
 };
 </script>
