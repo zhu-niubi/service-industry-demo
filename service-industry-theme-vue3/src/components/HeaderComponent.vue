@@ -39,7 +39,7 @@
               <nav class="navbar navbar-expand-lg navbar-light p-0">
                 <div class="navbar-header navbar-header-custom">
                   <!-- start logo -->
-                  <a href="index.html" class="navbar-brand h-default"
+                  <a href="/" class="navbar-brand h-default"
                     ><img id="logo" src="/images/logos/logo-inner.png" alt="logo"
                   /></a>
                   <!-- end logo -->

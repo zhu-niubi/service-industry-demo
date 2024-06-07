@@ -5,24 +5,27 @@
     <IndexComponent />
     <FooterComponent />
   </div>
-  <a href="#!" class="scroll-to-top"><i class="fas fa-angle-up" aria-hidden="true"></i></a>
+  <a href="#!" class="scroll-to-top"
+    ><i class="fas fa-angle-up" aria-hidden="true"></i
+  ></a>
 </template>
 
 <script>
-import $ from "jquery";
-import IndexComponent from '@/components/IndexComponent.vue'
-import HeaderComponent from '@/components/HeaderComponent.vue'
-import FooterComponent from '@/components/FooterComponent.vue'
+import IndexComponent from "@/components/IndexComponent.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
 
+import { loadAllScripts } from "../utils/loadAllScript";
 
 export default {
   name: "HomeView",
   components: {
-    IndexComponent, HeaderComponent, FooterComponent
+    IndexComponent,
+    HeaderComponent,
+    FooterComponent,
   },
   mounted() {
-    $(document).ready(function () {
-    });
+    loadAllScripts();
   },
 };
 </script>

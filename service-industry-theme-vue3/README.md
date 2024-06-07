@@ -1,4 +1,4 @@
-# nkoda-test
+# nkoda-web
 
 ## Project setup
 ```
