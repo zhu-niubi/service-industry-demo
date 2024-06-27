@@ -1,0 +1,73 @@
+{
+  "language": "language",
+  "menu": {
+    "home": {
+      "title": "Home",
+      "movingCompany": "Headset page test",
+      "gardener": "Gardener",
+      "carWash": "Car Wash",
+      "roofing": "Roofing",
+      "laundry": "Laundry"
+    },
+    "introduction": {
+      "title": "Introduction",
+      "aboutUs": "About Us",
+      "companyHistory": "Company History",
+      "ourProcess": "Our Process",
+      "services": {
+        "title": "TestServices",
+        "services1": "Services1",
+        "services2": "Services2"
+      }
+    },
+    "industrial": {
+      "title": "Industrial",
+      "headers": {
+        "title": "Headers",
+        "headerStyle1": "Header Style 1",
+        "headerStyle2": "Header Style 2"
+      },
+      "footers": {
+        "title": "Footers",
+        "footerStyle1": "Footer Style 1",
+        "footerStyle2": "Footer Style 2",
+        "footerStyle3": "Footer Style 3",
+        "footerStyle4": "Footer Style 4"
+      }
+    },
+    "solution": {
+      "title": "Solution",
+      "project3Column": "Project 3 Column",
+      "project4Column": "Project 4 Column",
+      "projectDetails": "Project Details"
+    },
+    "career": {
+      "title": "Career",
+      "blogGrid": "Blog Grid",
+      "blogList": "Blog List",
+      "blogDetail": "Blog Detail"
+    },
+    "media": {
+      "title": "Media",
+      "productGrid": "Product Grid",
+      "productDetail": "Product Detail"
+    },
+    "contact": "Contact"
+  },
+  "footer_menu": {
+    "company": {
+      "title": "Company",
+      "about_us": "About Us",
+      "careers": "Careers",
+      "our_services": "Our Services",
+      "contact_us": "Contact Us"
+    },
+    "customer": {
+      "title": "Customer",
+      "our_clients": "Our Clients",
+      "testimonial": "Testimonial",
+      "pricing": "Pricing",
+      "our_process": "Our Process"
+    }
+  }
+}

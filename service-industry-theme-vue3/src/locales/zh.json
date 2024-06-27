@@ -1,0 +1,73 @@
+{
+  "language": "语言",
+  "menu": {
+    "home": {
+      "title": "首页",
+      "movingCompany": "二级页面测试",
+      "gardener": "园丁",
+      "carWash": "洗车",
+      "roofing": "屋顶修缮",
+      "laundry": "洗衣房"
+    },
+    "introduction": {
+      "title": "公司介绍",
+      "aboutUs": "关于我们",
+      "companyHistory": "公司历史",
+      "ourProcess": "我们的流程",
+      "services": {
+        "title": "测试服务",
+        "services1": "服务一",
+        "services2": "服务二"
+      }
+    },
+    "industrial": {
+      "title": "全产业链布局",
+      "headers": {
+        "title": "页眉",
+        "headerStyle1": "页眉样式1",
+        "headerStyle2": "页眉样式2"
+      },
+      "footers": {
+        "title": "页脚",
+        "footerStyle1": "页脚样式1",
+        "footerStyle2": "页脚样式2",
+        "footerStyle3": "页脚样式3",
+        "footerStyle4": "页脚样式4"
+      }
+    },
+    "solution": {
+      "title": "解决方案",
+      "project3Column": "项目三列",
+      "project4Column": "项目四列",
+      "projectDetails": "项目详情"
+    },
+    "career": {
+      "title": "职业生涯",
+      "blogGrid": "博客网格",
+      "blogList": "博客列表",
+      "blogDetail": "博客详情"
+    },
+    "media": {
+      "title": "媒体库",
+      "productGrid": "产品网格",
+      "productDetail": "产品详情"
+    },
+    "contact": "联系我们"
+  },
+  "footer_menu": {
+    "company": {
+      "title": "公司",
+      "about_us": "关于我们",
+      "careers": "职业",
+      "our_services": "我们的服务",
+      "contact_us": "联系我们"
+    },
+    "customer": {
+      "title": "客户",
+      "our_clients": "客户展示",
+      "testimonial": "客户评价",
+      "pricing": "定价",
+      "our_process": "流程"
+    }
+  }
+}

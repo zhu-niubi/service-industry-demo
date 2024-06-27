@@ -5,30 +5,27 @@
  * https://dribbble.com/elmanvebs
  * Apache License 2.0
  *------------------------------------------------------*/
-window.requestAnimFrame = (function(){
-  return window.requestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.mozRequestAnimationFrame ||
-  window.oRequestAnimationFrame ||
-  window.msRequestAnimationFrame ||
-  function(callback){
-    window.setTimeout(callback, 20);
-  };
+window.requestAnimFrame = (function () {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 20);
+    }
+  );
 })();
 
 function detect_old_ie() {
   if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-   var ieversion=new Number(RegExp.$1);
-   if (ieversion>=9)
-    return false
-   else if (ieversion>=8)
-    return true
-   else if (ieversion>=7)
-    return true
-   else if (ieversion>=6)
-    return true
-   else if (ieversion>=5)
-    return true
+    var ieversion = new Number(RegExp.$1);
+    if (ieversion >= 9) return false;
+    else if (ieversion >= 8) return true;
+    else if (ieversion >= 7) return true;
+    else if (ieversion >= 6) return true;
+    else if (ieversion >= 5) return true;
   } else return false;
 }
 
@@ -45,22 +42,59 @@ function detect_old_ie() {
     var xzoomID = {};
 
     var sw, sh, mw, mh, moffset, stop, sleft, mtop, mleft, ctop, cleft, mx, my;
-    var source, tint, preview, loading, trans, transImg, sobjects = new Array();
-    var imageGallery = new Array(), index = 0, cindex = 0;
+    var source,
+      tint,
+      preview,
+      loading,
+      trans,
+      transImg,
+      sobjects = new Array();
+    var imageGallery = new Array(),
+      index = 0,
+      cindex = 0;
     var img, imgObj, lens, lensImg;
-    var lw, lh, ll, lt, llc, ltc, ocofx, ocofy, cofx, cofy, c1, c2, iwh, scale = 0;
+    var lw,
+      lh,
+      ll,
+      lt,
+      llc,
+      ltc,
+      ocofx,
+      ocofy,
+      cofx,
+      cofy,
+      c1,
+      c2,
+      iwh,
+      scale = 0;
     var imgObjwidth, imgObjheight;
-    var flag, u = 0, v = 0, su = 0, sv = 0, lsu = 0, lsv = 0, lu = 0, lv = 0, llu = 0, llv = 0;
-    var ie = detect_old_ie(), aie = /MSIE (\d+\.\d+);/.test(navigator.userAgent), iex, iey;
-    var active, title = '', caption, caption_container;
+    var flag,
+      u = 0,
+      v = 0,
+      su = 0,
+      sv = 0,
+      lsu = 0,
+      lsv = 0,
+      lu = 0,
+      lv = 0,
+      llu = 0,
+      llv = 0;
+    var ie = detect_old_ie(),
+      aie = /MSIE (\d+\.\d+);/.test(navigator.userAgent),
+      iex,
+      iey;
+    var active,
+      title = "",
+      caption,
+      caption_container;
 
     //Adaptive properties
-    var wsw, wsh, osw, osh, tsw, tsh, oposition, reverse;//, smoothNormal;
+    var wsw, wsh, osw, osh, tsw, tsh, oposition, reverse; //, smoothNormal;
 
-    this.adaptive = function() {
+    this.adaptive = function () {
       if (osw == 0 || osh == 0) {
-        mObj.css('width', '');
-        mObj.css('height', '');
+        mObj.css("width", "");
+        mObj.css("height", "");
         osw = mObj.width();
         osh = mObj.height();
       }
@@ -73,71 +107,80 @@ function detect_old_ie() {
       tsh = mObj.height();
 
       var update = false;
-      if (osw>wsw || osh>wsh) update = true;
+      if (osw > wsw || osh > wsh) update = true;
 
       if (tsw > osw) tsw = osw;
       if (tsh > osh) tsh = osh;
       if (update) {
-        mObj.width('100%');
+        mObj.width("100%");
       } else {
         if (osw != 0) mObj.width(osw);
       }
-      if (oposition != 'fullscreen') if (adaptive_position_fit()) current.options.position = oposition; else current.options.position = current.options.mposition;
-      if (!current.options.lensReverse) reverse = current.options.adaptiveReverse && current.options.position == current.options.mposition;
-    }
+      if (oposition != "fullscreen")
+        if (adaptive_position_fit()) current.options.position = oposition;
+        else current.options.position = current.options.mposition;
+      if (!current.options.lensReverse)
+        reverse =
+          current.options.adaptiveReverse &&
+          current.options.position == current.options.mposition;
+    };
 
     function spos() {
       var doc = document.documentElement;
       var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-      var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+      var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-      return {left: left, top: top};
+      return { left: left, top: top };
     }
 
     function adaptive_position_fit() {
       var moffset = mObj.offset();
 
-      if (current.options.zoomWidth == 'auto') mw = tsw; else mw = current.options.zoomWidth; //tsw/osw * current.options.zoomWidth;
-      if (current.options.zoomHeight == 'auto') mh = tsh; else mh = current.options.zoomHeight; //tsw/osh * current.options.zoomHeight;
+      if (current.options.zoomWidth == "auto") mw = tsw;
+      else mw = current.options.zoomWidth; //tsw/osw * current.options.zoomWidth;
+      if (current.options.zoomHeight == "auto") mh = tsh;
+      else mh = current.options.zoomHeight; //tsw/osh * current.options.zoomHeight;
 
-      if (current.options.position.substr(0,1) == '#') xzoomID = $(current.options.position); else xzoomID.length = 0;
+      if (current.options.position.substr(0, 1) == "#")
+        xzoomID = $(current.options.position);
+      else xzoomID.length = 0;
       if (xzoomID.length != 0) return true;
 
-      switch(oposition) {
-        case 'lens':
-        case 'inside':
-        return true;
-        break;
-        case 'top':
+      switch (oposition) {
+        case "lens":
+        case "inside":
+          return true;
+          break;
+        case "top":
           stop = moffset.top;
           sleft = moffset.left;
           mtop = stop - mh; //tsh;
           mleft = sleft;
-        break;
-        case 'left':
+          break;
+        case "left":
           stop = moffset.top;
           sleft = moffset.left;
           mtop = stop;
           mleft = sleft - mw; //tsw;
-        break;
-        case 'bottom':
+          break;
+        case "bottom":
           stop = moffset.top;
           sleft = moffset.left;
           mtop = stop + tsh;
           mleft = sleft;
-        break;
-        case 'right':
+          break;
+        case "right":
         default:
           stop = moffset.top;
           sleft = moffset.left;
           mtop = stop;
           mleft = sleft + tsw;
       }
-      if (mleft+mw>wsw || mleft<0) return false; //if (mtop+mh>wsh || mtop<0) return false;
+      if (mleft + mw > wsw || mleft < 0) return false; //if (mtop+mh>wsh || mtop<0) return false;
       return true;
     }
 
-    this.xscroll = function(event) {
+    this.xscroll = function (event) {
       mx = event.pageX || event.originalEvent.pageX;
       my = event.pageY || event.originalEvent.pageY;
 
@@ -147,7 +190,10 @@ function detect_old_ie() {
         scale = event.xscale;
         xscale(mx, my);
       } else {
-        var delta = -event.originalEvent.detail || event.originalEvent.wheelDelta || event.xdelta;
+        var delta =
+          -event.originalEvent.detail ||
+          event.originalEvent.wheelDelta ||
+          event.xdelta;
         var x = mx;
         var y = my;
         if (ie) {
@@ -155,32 +201,52 @@ function detect_old_ie() {
           y = iey;
         }
 
-        if (delta > 0) delta = -0.05; else delta = 0.05;
+        if (delta > 0) delta = -0.05;
+        else delta = 0.05;
 
         scale += delta;
 
         xscale(x, y);
       }
-    }
+    };
 
     function lensShape() {
-      if (current.options.lensShape == 'circle' && current.options.position == 'lens') {
+      if (
+        current.options.lensShape == "circle" &&
+        current.options.position == "lens"
+      ) {
         //this function must be called before set_lens()
         lw = lh = Math.max(lw, lh);
-        var radius = (lw + Math.max(ltc,llc) * 2) / 2;
-        lens.css({'-moz-border-radius': radius, '-webkit-border-radius': radius, 'border-radius': radius});
+        var radius = (lw + Math.max(ltc, llc) * 2) / 2;
+        lens.css({
+          "-moz-border-radius": radius,
+          "-webkit-border-radius": radius,
+          "border-radius": radius,
+        });
       }
     }
 
     function lensOutput(x, y, sx, sy) {
-      if (current.options.position == 'lens') {
-        imgObj.css({top: -(y-stop) * cofy + (lh / 2), left: -(x-sleft) * cofx + (lw / 2)});
+      if (current.options.position == "lens") {
+        imgObj.css({
+          top: -(y - stop) * cofy + lh / 2,
+          left: -(x - sleft) * cofx + lw / 2,
+        });
         if (current.options.bg) {
-          lens.css({'background-image': 'url('+imgObj.attr('src')+')', 'background-repeat': 'no-repeat', 'background-position': (-(x-sleft) * cofx + (lw / 2))+'px '+(-(y-stop) * cofy + (lh / 2))+'px'});
-          if (sx && sy) lens.css({'background-size': sx+'px '+sy+'px'});
+          lens.css({
+            "background-image": "url(" + imgObj.attr("src") + ")",
+            "background-repeat": "no-repeat",
+            "background-position":
+              -(x - sleft) * cofx +
+              lw / 2 +
+              "px " +
+              (-(y - stop) * cofy + lh / 2) +
+              "px",
+          });
+          if (sx && sy) lens.css({ "background-size": sx + "px " + sy + "px" });
         }
       } else {
-        imgObj.css({top: -lt * cofy, left: -ll * cofx});
+        imgObj.css({ top: -lt * cofy, left: -ll * cofx });
       }
     }
 
@@ -223,8 +289,8 @@ function detect_old_ie() {
         lens.width(lw);
         lens.height(lh);
 
-        lens.css({top: lt - ltc, left: ll - llc});
-        lensImg.css({top: -lt, left: -ll});
+        lens.css({ top: lt - ltc, left: ll - llc });
+        lensImg.css({ top: -lt, left: -ll });
         lensOutput(x, y, iw, ih);
       }
     }
@@ -259,8 +325,8 @@ function detect_old_ie() {
       lens.width(lw);
       lens.height(lh);
 
-      lens.css({top: lt - ltc, left: ll - llc});
-      lensImg.css({top: -lt, left: -ll});
+      lens.css({ top: lt - ltc, left: ll - llc });
+      lensImg.css({ top: -lt, left: -ll });
 
       set_lens(x2, y2);
       lensOutput(x, y, sx, sy);
@@ -278,10 +344,10 @@ function detect_old_ie() {
     function set_lens(x, y) {
       x -= sleft;
       y -= stop;
-      ll = x - (lw / 2);
-      lt = y - (lh / 2);
+      ll = x - lw / 2;
+      lt = y - lh / 2;
 
-      if (current.options.position != 'lens' && current.options.lensCollision) {
+      if (current.options.position != "lens" && current.options.lensCollision) {
         if (ll < 0) ll = 0;
         if (sw >= lw && ll > sw - lw) ll = sw - lw;
         if (sw < lw) ll = sw / 2 - lw / 2;
@@ -298,7 +364,7 @@ function detect_old_ie() {
     }
 
     function prepare_zoom(x, y) {
-      if (current.options.position == 'fullscreen') {
+      if (current.options.position == "fullscreen") {
         sw = $(window).width();
         sh = $(window).height();
       } else {
@@ -306,9 +372,15 @@ function detect_old_ie() {
         sh = mObj.height();
       }
 
-      loading.css({top: sh / 2 - loading.height() / 2, left: sw / 2 - loading.width() / 2});
+      loading.css({
+        top: sh / 2 - loading.height() / 2,
+        left: sw / 2 - loading.width() / 2,
+      });
 
-      if (current.options.rootOutput || current.options.position == 'fullscreen') {
+      if (
+        current.options.rootOutput ||
+        current.options.position == "fullscreen"
+      ) {
         moffset = mObj.offset();
       } else {
         moffset = mObj.position();
@@ -318,38 +390,38 @@ function detect_old_ie() {
       moffset.top = Math.round(moffset.top);
       moffset.left = Math.round(moffset.left);
 
-      switch(current.options.position) {
-        case 'fullscreen':
+      switch (current.options.position) {
+        case "fullscreen":
           stop = spos().top;
           sleft = spos().left;
           mtop = 0;
           mleft = 0;
-        break;
-        case 'inside':
+          break;
+        case "inside":
           stop = moffset.top;
           sleft = moffset.left;
           mtop = 0;
           mleft = 0;
-        break;
-        case 'top':
+          break;
+        case "top":
           stop = moffset.top;
           sleft = moffset.left;
           mtop = stop - mh;
           mleft = sleft;
-        break;
-        case 'left':
+          break;
+        case "left":
           stop = moffset.top;
           sleft = moffset.left;
           mtop = stop;
           mleft = sleft - mw;
-        break;
-        case 'bottom':
+          break;
+        case "bottom":
           stop = moffset.top;
           sleft = moffset.left;
           mtop = stop + sh;
           mleft = sleft;
-        break;
-        case 'right':
+          break;
+        case "right":
         default:
           stop = moffset.top;
           sleft = moffset.left;
@@ -361,24 +433,42 @@ function detect_old_ie() {
       stop -= source.outerHeight() / 2;
       sleft -= source.outerWidth() / 2;
 
-      if (current.options.position.substr(0,1) == '#') xzoomID = $(current.options.position); else xzoomID.length = 0;
-      if (xzoomID.length == 0 && current.options.position != 'inside' && current.options.position!= 'fullscreen') {
-
-        if (!current.options.adaptive || !osw || !osh) {osw = sw; osh = sh;}
-        if (current.options.zoomWidth == 'auto') mw = sw; else mw = current.options.zoomWidth; //sw/osw * current.options.zoomWidth;
-        if (current.options.zoomHeight == 'auto') mh = sh; else mh = current.options.zoomHeight; //sw/osh * current.options.zoomHeight;
+      if (current.options.position.substr(0, 1) == "#")
+        xzoomID = $(current.options.position);
+      else xzoomID.length = 0;
+      if (
+        xzoomID.length == 0 &&
+        current.options.position != "inside" &&
+        current.options.position != "fullscreen"
+      ) {
+        if (!current.options.adaptive || !osw || !osh) {
+          osw = sw;
+          osh = sh;
+        }
+        if (current.options.zoomWidth == "auto") mw = sw;
+        else mw = current.options.zoomWidth; //sw/osw * current.options.zoomWidth;
+        if (current.options.zoomHeight == "auto") mh = sh;
+        else mh = current.options.zoomHeight; //sw/osh * current.options.zoomHeight;
 
         //Add offset
         mtop += current.options.Yoffset;
         mleft += current.options.Xoffset;
 
-        preview.css({width: mw + 'px', height: mh + 'px', top: mtop, left: mleft});
-        if (current.options.position != 'lens') parent.append(preview);
-      } else if (current.options.position == 'inside' || current.options.position == 'fullscreen') {
+        preview.css({
+          width: mw + "px",
+          height: mh + "px",
+          top: mtop,
+          left: mleft,
+        });
+        if (current.options.position != "lens") parent.append(preview);
+      } else if (
+        current.options.position == "inside" ||
+        current.options.position == "fullscreen"
+      ) {
         mw = sw;
         mh = sh;
 
-        preview.css({width: mw + 'px', height: mh + 'px'});
+        preview.css({ width: mw + "px", height: mh + "px" });
         source.append(preview);
       } else {
         mw = xzoomID.width();
@@ -398,59 +488,85 @@ function detect_old_ie() {
 
         mtop += (xzoomID.outerHeight() - mh - preview.outerHeight()) / 2;
         mleft += (xzoomID.outerWidth() - mw - preview.outerWidth()) / 2;
-        preview.css({width: mw + 'px', height: mh + 'px', top: mtop, left: mleft});
+        preview.css({
+          width: mw + "px",
+          height: mh + "px",
+          top: mtop,
+          left: mleft,
+        });
       }
 
-      if (current.options.title && title != '') {
-        if (current.options.position == 'inside' || current.options.position == 'lens' || current.options.position == 'fullscreen') {
+      if (current.options.title && title != "") {
+        if (
+          current.options.position == "inside" ||
+          current.options.position == "lens" ||
+          current.options.position == "fullscreen"
+        ) {
           ctop = mtop;
           cleft = mleft;
           source.append(caption_container);
         } else {
-          ctop = mtop + (preview.outerHeight()-mh)/2;
-          cleft = mleft + (preview.outerWidth()-mw)/2;
+          ctop = mtop + (preview.outerHeight() - mh) / 2;
+          cleft = mleft + (preview.outerWidth() - mw) / 2;
           parent.append(caption_container);
         }
-        caption_container.css({width: mw + 'px', height: mh + 'px', top: ctop, left: cleft});
+        caption_container.css({
+          width: mw + "px",
+          height: mh + "px",
+          top: ctop,
+          left: cleft,
+        });
       }
 
-      source.css({width: sw + 'px', height: sh + 'px', top: stop, left: sleft});
-      tint.css({width: sw + 'px', height: sh + 'px'});
-      if (current.options.tint && (current.options.position != 'inside' && current.options.position != 'fullscreen'))
-        tint.css('background-color', current.options.tint)
+      source.css({
+        width: sw + "px",
+        height: sh + "px",
+        top: stop,
+        left: sleft,
+      });
+      tint.css({ width: sw + "px", height: sh + "px" });
+      if (
+        current.options.tint &&
+        current.options.position != "inside" &&
+        current.options.position != "fullscreen"
+      )
+        tint.css("background-color", current.options.tint);
       else if (ie) {
-        tint.css({'background-image': 'url('+mObj.attr('src')+')', 'background-color': '#fff'});
+        tint.css({
+          "background-image": "url(" + mObj.attr("src") + ")",
+          "background-color": "#fff",
+        });
       }
 
       //Image object
       img = new Image();
 
-      var timestamp = '';
-      if (aie) timestamp = '?r='+(new Date()).getTime();
-      img.src = mObj.attr('xoriginal')+timestamp;
+      var timestamp = "";
+      if (aie) timestamp = "?r=" + new Date().getTime();
+      img.src = mObj.attr("xoriginal") + timestamp;
 
       imgObj = $(img);
-      imgObj.css('position', 'absolute');
+      imgObj.css("position", "absolute");
       //debug
       //imgObj.css('opacity', '0.5');
 
       img = new Image();
-      img.src = mObj.attr('src');
+      img.src = mObj.attr("src");
 
       lensImg = $(img);
-      lensImg.css('position', 'absolute');
+      lensImg.css("position", "absolute");
       lensImg.width(sw);
 
       //Append image
       switch (current.options.position) {
-        case 'fullscreen':
-        case 'inside':
+        case "fullscreen":
+        case "inside":
           preview.append(imgObj);
-        break;
-        case 'lens':
+          break;
+        case "lens":
           lens.append(imgObj);
-          if (current.options.bg) imgObj.css({display: 'none'});
-        break;
+          if (current.options.bg) imgObj.css({ display: "none" });
+          break;
         default:
           preview.append(imgObj);
           lens.append(lensImg);
@@ -458,190 +574,223 @@ function detect_old_ie() {
     }
 
     this.openzoom = function (event) {
-        mx = event.pageX; my = event.pageY;
+      mx = event.pageX;
+      my = event.pageY;
 
-        if (current.options.adaptive) current.adaptive();
-        scale = current.options.defaultScale; flag = false;
+      if (current.options.adaptive) current.adaptive();
+      scale = current.options.defaultScale;
+      flag = false;
 
-        //Source container
-        source = $('<div></div>');
-        if (current.options.sourceClass != '') source.addClass(current.options.sourceClass);
-        source.css('position', 'absolute');
+      //Source container
+      source = $("<div></div>");
+      if (current.options.sourceClass != "")
+        source.addClass(current.options.sourceClass);
+      source.css("position", "absolute");
 
-        //Loading container
-        loading = $('<div></div>');
-        if (current.options.loadingClass != '') loading.addClass(current.options.loadingClass);
-        loading.css('position', 'absolute');
+      //Loading container
+      loading = $("<div></div>");
+      if (current.options.loadingClass != "")
+        loading.addClass(current.options.loadingClass);
+      loading.css("position", "absolute");
 
-        tint = $('<div style="position: absolute; top: 0; left: 0;"></div>');
+      tint = $('<div style="position: absolute; top: 0; left: 0;"></div>');
 
-        source.append(loading);
+      source.append(loading);
 
-        //Preview container
-        preview = $('<div></div>');
-        if (current.options.zoomClass != '' && current.options.position != 'fullscreen') preview.addClass(current.options.zoomClass);
-        preview.css({position: 'absolute', overflow: 'hidden', opacity: 1});
+      //Preview container
+      preview = $("<div></div>");
+      if (
+        current.options.zoomClass != "" &&
+        current.options.position != "fullscreen"
+      )
+        preview.addClass(current.options.zoomClass);
+      preview.css({ position: "absolute", overflow: "hidden", opacity: 1 });
 
-        //Caption
-        if (current.options.title && title != '') {
-          caption_container = $('<div></div>');
-          caption = $('<div></div>');
-          caption_container.css({position: 'absolute', opacity: 1});
-          if (current.options.titleClass) caption.addClass(current.options.titleClass);
-          caption.html('<span>'+title+'</span>');
-          caption_container.append(caption);
-          if (current.options.fadeIn) caption_container.css({opacity:0});
-        }
+      //Caption
+      if (current.options.title && title != "") {
+        caption_container = $("<div></div>");
+        caption = $("<div></div>");
+        caption_container.css({ position: "absolute", opacity: 1 });
+        if (current.options.titleClass)
+          caption.addClass(current.options.titleClass);
+        caption.html("<span>" + title + "</span>");
+        caption_container.append(caption);
+        if (current.options.fadeIn) caption_container.css({ opacity: 0 });
+      }
 
-        //Lens object
-        lens = $('<div></div>');
-        if (current.options.lensClass != '') lens.addClass(current.options.lensClass);
-        lens.css({position: 'absolute', overflow: 'hidden'});
+      //Lens object
+      lens = $("<div></div>");
+      if (current.options.lensClass != "")
+        lens.addClass(current.options.lensClass);
+      lens.css({ position: "absolute", overflow: "hidden" });
 
-        //Lens tint
-        if (current.options.lens) {
-          lenstint = $('<div></div>');
-          lenstint.css({position: 'absolute', background: current.options.lens, opacity: current.options.lensOpacity, width: '100%', height: '100%', top: 0, left: 0, 'z-index': 9999});
-          lens.append(lenstint);
-        }
-
-        prepare_zoom(mx, my);
-
-        if (current.options.position != 'inside' && current.options.position != 'fullscreen') {
-          if (current.options.tint || ie) source.append(tint);
-
-          if (current.options.fadeIn) {
-            tint.css({opacity:0});
-            lens.css({opacity:0});
-            preview.css({opacity:0});
-          }
-          parent.append(source);
-        } else {
-          if (current.options.fadeIn) preview.css({opacity:0});
-          parent.append(source);
-        }
-
-        //Add event on mouse move
-        current.eventmove(source);
-
-        //On mouse leave delete containers
-        current.eventleave(source);
-
-        //Correct preview
-        switch(current.options.position) {
-          case 'inside':
-            mtop -= (preview.outerHeight() - preview.height()) / 2;
-            mleft -= (preview.outerWidth() - preview.width()) / 2;
-          break;
-          case 'top':
-            mtop -= preview.outerHeight() - preview.height();
-            mleft -= (preview.outerWidth() - preview.width()) / 2;
-          break;
-          case 'left':
-            mtop -= (preview.outerHeight()  - preview.height()) / 2;
-            mleft -= preview.outerWidth() - preview.width();
-          break;
-          case 'bottom':
-            mleft -= (preview.outerWidth() - preview.width()) / 2;
-          break;
-          case 'right':
-            mtop -= (preview.outerHeight() - preview.height()) / 2;
-        }
-
-        preview.css({top: mtop, left: mleft});
-
-        //We must be sure that image has been loaded
-        imgObj.xon('load', function(e) {
-          loading.remove();
-
-          if (!current.options.openOnSmall && (imgObj.width() < mw || imgObj.height() < mh)) {
-            current.closezoom();
-            e.preventDefault();
-            return false;
-          }
-
-          //Scroll functionality
-          if (current.options.scroll) current.eventscroll(source);
-
-          if (current.options.position != 'inside' && current.options.position != 'fullscreen') {
-            //Append lens to source container
-            source.append(lens);
-            if (current.options.fadeIn) {
-              tint.fadeTo(300, current.options.tintOpacity);
-              lens.fadeTo(300, 1);
-              preview.fadeTo(300,1);
-            } else {
-              tint.css({opacity: current.options.tintOpacity});
-              lens.css({opacity: 1});
-              preview.css({opacity: 1});
-            }
-          } else {
-            if (current.options.fadeIn) {
-              preview.fadeTo(300,1);
-            } else {
-              preview.css({opacity: 1});
-            }
-          }
-
-          if (current.options.title && title != '') {
-            if (current.options.fadeIn) caption_container.fadeTo(300,1); else caption_container.css({opacity: 1});
-          }
-
-          imgObjwidth = imgObj.width();
-          imgObjheight = imgObj.height();
-
-          if (current.options.adaptive) {
-          //Images corrections for adaptive
-            if (sw<osw || sh<osh) {
-              lensImg.width(sw);
-              lensImg.height(sh);
-
-              imgObjwidth = sw/osw * imgObjwidth;
-              imgObjheight = sh/osh * imgObjheight;
-
-              imgObj.width(imgObjwidth);
-              imgObj.height(imgObjheight);
-            }
-          }
-
-          //Calculate lens size
-          lsu = su = imgObjwidth;
-          lsv = sv = imgObjheight;
-          iwh = imgObjwidth / imgObjheight;
-          c1 = imgObjwidth / mw;
-          c2 = imgObjheight / mh;
-
-          //outerHeight and outerWidth work wrong sometimes, especially when we use init() function
-          //ltc = lens.outerHeight() / 2;
-          //llc = lens.outerWidth() / 2;
-          //Issue #2 Test .css() function that can return NaN and break lens object position
-          var t, o = ['padding-','border-'];
-          ltc = llc = 0;
-          for(var i = 0; i<o.length;i++) {
-            t = parseFloat(lens.css(o[i]+'top-width'));
-            ltc += t !== t ? 0 : t;
-            t = parseFloat(lens.css(o[i]+'bottom-width'));
-            ltc += t !== t ? 0 : t;
-            t = parseFloat(lens.css(o[i]+'left-width'));
-            llc += t !== t ? 0 : t;
-            t = parseFloat(lens.css(o[i]+'right-width'));
-            llc += t !== t ? 0 : t;
-          }
-          ltc /= 2;
-          llc /= 2;
-          //ltc = (parseFloat(lens.css('padding-top-width')) + parseFloat(lens.css('padding-bottom-width')) + parseFloat(lens.css('border-top-width')) + parseFloat(lens.css('border-bottom-width'))) / 2;
-          //llc = (parseFloat(lens.css('padding-left-width')) + parseFloat(lens.css('padding-right-width')) + parseFloat(lens.css('border-left-width')) + parseFloat(lens.css('border-right-width'))) / 2;
-          //ltc = (pb(lens, 'padding', 1) + pb(lens, 'border', 1)) / 2;
-          //llc = (pb(lens, 'padding', 0) + pb(lens, 'border', 0)) / 2;
-          llu = lu = u = mx;
-          llv = lv = v = my;
-          xscale(mx, my);
-
-          if (current.options.smooth) {flag = true; requestAnimFrame(loopZoom);}
-
-          current.eventclick(source);
+      //Lens tint
+      if (current.options.lens) {
+        lenstint = $("<div></div>");
+        lenstint.css({
+          position: "absolute",
+          background: current.options.lens,
+          opacity: current.options.lensOpacity,
+          width: "100%",
+          height: "100%",
+          top: 0,
+          left: 0,
+          "z-index": 9999,
         });
-    }
+        lens.append(lenstint);
+      }
+
+      prepare_zoom(mx, my);
+
+      if (
+        current.options.position != "inside" &&
+        current.options.position != "fullscreen"
+      ) {
+        if (current.options.tint || ie) source.append(tint);
+
+        if (current.options.fadeIn) {
+          tint.css({ opacity: 0 });
+          lens.css({ opacity: 0 });
+          preview.css({ opacity: 0 });
+        }
+        parent.append(source);
+      } else {
+        if (current.options.fadeIn) preview.css({ opacity: 0 });
+        parent.append(source);
+      }
+
+      //Add event on mouse move
+      current.eventmove(source);
+
+      //On mouse leave delete containers
+      current.eventleave(source);
+
+      //Correct preview
+      switch (current.options.position) {
+        case "inside":
+          mtop -= (preview.outerHeight() - preview.height()) / 2;
+          mleft -= (preview.outerWidth() - preview.width()) / 2;
+          break;
+        case "top":
+          mtop -= preview.outerHeight() - preview.height();
+          mleft -= (preview.outerWidth() - preview.width()) / 2;
+          break;
+        case "left":
+          mtop -= (preview.outerHeight() - preview.height()) / 2;
+          mleft -= preview.outerWidth() - preview.width();
+          break;
+        case "bottom":
+          mleft -= (preview.outerWidth() - preview.width()) / 2;
+          break;
+        case "right":
+          mtop -= (preview.outerHeight() - preview.height()) / 2;
+      }
+
+      preview.css({ top: mtop, left: mleft });
+
+      //We must be sure that image has been loaded
+      imgObj.xon("load", function (e) {
+        loading.remove();
+
+        if (
+          !current.options.openOnSmall &&
+          (imgObj.width() < mw || imgObj.height() < mh)
+        ) {
+          current.closezoom();
+          e.preventDefault();
+          return false;
+        }
+
+        //Scroll functionality
+        if (current.options.scroll) current.eventscroll(source);
+
+        if (
+          current.options.position != "inside" &&
+          current.options.position != "fullscreen"
+        ) {
+          //Append lens to source container
+          source.append(lens);
+          if (current.options.fadeIn) {
+            tint.fadeTo(300, current.options.tintOpacity);
+            lens.fadeTo(300, 1);
+            preview.fadeTo(300, 1);
+          } else {
+            tint.css({ opacity: current.options.tintOpacity });
+            lens.css({ opacity: 1 });
+            preview.css({ opacity: 1 });
+          }
+        } else {
+          if (current.options.fadeIn) {
+            preview.fadeTo(300, 1);
+          } else {
+            preview.css({ opacity: 1 });
+          }
+        }
+
+        if (current.options.title && title != "") {
+          if (current.options.fadeIn) caption_container.fadeTo(300, 1);
+          else caption_container.css({ opacity: 1 });
+        }
+
+        imgObjwidth = imgObj.width();
+        imgObjheight = imgObj.height();
+
+        if (current.options.adaptive) {
+          //Images corrections for adaptive
+          if (sw < osw || sh < osh) {
+            lensImg.width(sw);
+            lensImg.height(sh);
+
+            imgObjwidth = (sw / osw) * imgObjwidth;
+            imgObjheight = (sh / osh) * imgObjheight;
+
+            imgObj.width(imgObjwidth);
+            imgObj.height(imgObjheight);
+          }
+        }
+
+        //Calculate lens size
+        lsu = su = imgObjwidth;
+        lsv = sv = imgObjheight;
+        iwh = imgObjwidth / imgObjheight;
+        c1 = imgObjwidth / mw;
+        c2 = imgObjheight / mh;
+
+        //outerHeight and outerWidth work wrong sometimes, especially when we use init() function
+        //ltc = lens.outerHeight() / 2;
+        //llc = lens.outerWidth() / 2;
+        //Issue #2 Test .css() function that can return NaN and break lens object position
+        var t,
+          o = ["padding-", "border-"];
+        ltc = llc = 0;
+        for (var i = 0; i < o.length; i++) {
+          t = parseFloat(lens.css(o[i] + "top-width"));
+          ltc += t !== t ? 0 : t;
+          t = parseFloat(lens.css(o[i] + "bottom-width"));
+          ltc += t !== t ? 0 : t;
+          t = parseFloat(lens.css(o[i] + "left-width"));
+          llc += t !== t ? 0 : t;
+          t = parseFloat(lens.css(o[i] + "right-width"));
+          llc += t !== t ? 0 : t;
+        }
+        ltc /= 2;
+        llc /= 2;
+        //ltc = (parseFloat(lens.css('padding-top-width')) + parseFloat(lens.css('padding-bottom-width')) + parseFloat(lens.css('border-top-width')) + parseFloat(lens.css('border-bottom-width'))) / 2;
+        //llc = (parseFloat(lens.css('padding-left-width')) + parseFloat(lens.css('padding-right-width')) + parseFloat(lens.css('border-left-width')) + parseFloat(lens.css('border-right-width'))) / 2;
+        //ltc = (pb(lens, 'padding', 1) + pb(lens, 'border', 1)) / 2;
+        //llc = (pb(lens, 'padding', 0) + pb(lens, 'border', 0)) / 2;
+        llu = lu = u = mx;
+        llv = lv = v = my;
+        xscale(mx, my);
+
+        if (current.options.smooth) {
+          flag = true;
+          requestAnimFrame(loopZoom);
+        }
+
+        current.eventclick(source);
+      });
+    };
 
     /*function pb(obj, name, dir) {
       if (dir) {
@@ -651,7 +800,7 @@ function detect_old_ie() {
       }
     }*/
 
-    this.movezoom = function(event) {
+    this.movezoom = function (event) {
       mx = event.pageX;
       my = event.pageY;
       if (ie) {
@@ -667,7 +816,7 @@ function detect_old_ie() {
         event.pageY -= (y - sh / 2) * 2;
       }
 
-      if (x < 0 || x > sw || y < 0 || y > sh) source.trigger('mouseleave');
+      if (x < 0 || x > sw || y < 0 || y > sh) source.trigger("mouseleave");
       if (current.options.smooth) {
         u = event.pageX;
         v = event.pageY;
@@ -675,48 +824,48 @@ function detect_old_ie() {
         //Calculate zoom image position
         lensShape();
         set_lens(event.pageX, event.pageY);
-        lens.css({top: lt - ltc, left: ll - llc});
-        lensImg.css({top: -lt, left: -ll});
-        lensOutput(event.pageX,event.pageY, 0, 0);
+        lens.css({ top: lt - ltc, left: ll - llc });
+        lensImg.css({ top: -lt, left: -ll });
+        lensOutput(event.pageX, event.pageY, 0, 0);
       }
-    }
+    };
 
-    this.eventdefault = function() {
-      current.eventopen = function(element) {
-        element.xon('mouseenter', current.openzoom);
-      }
+    this.eventdefault = function () {
+      current.eventopen = function (element) {
+        element.xon("mouseenter", current.openzoom);
+      };
 
-      current.eventleave = function(element) {
-        element.xon('mouseleave', current.closezoom);
-      }
+      current.eventleave = function (element) {
+        element.xon("mouseleave", current.closezoom);
+      };
 
-      current.eventmove = function(element) {
-        element.xon('mousemove', current.movezoom);
-      }
+      current.eventmove = function (element) {
+        element.xon("mousemove", current.movezoom);
+      };
 
-      current.eventscroll = function(element) {
-        element.xon('mousewheel DOMMouseScroll', current.xscroll);
-      }
+      current.eventscroll = function (element) {
+        element.xon("mousewheel DOMMouseScroll", current.xscroll);
+      };
 
-      current.eventclick = function(element) {
-        element.xon('click', function(event) {
-          mObj.trigger('click');
+      current.eventclick = function (element) {
+        element.xon("click", function (event) {
+          mObj.trigger("click");
         });
-      }
-    }
+      };
+    };
 
-    this.eventunbind = function() {
-      mObj.xoff('mouseenter');
-      current.eventopen = function(element) {}
-      current.eventleave = function(element) {}
-      current.eventmove = function(element) {}
-      current.eventscroll = function(element) {}
-      current.eventclick = function(element) {}
-    }
+    this.eventunbind = function () {
+      mObj.xoff("mouseenter");
+      current.eventopen = function (element) {};
+      current.eventleave = function (element) {};
+      current.eventmove = function (element) {};
+      current.eventscroll = function (element) {};
+      current.eventclick = function (element) {};
+    };
 
     this.init = function (options) {
       //Default options
-      current.options = $.extend({},$.fn.xzoom.defaults, options);
+      current.options = $.extend({}, $.fn.xzoom.defaults, options);
 
       if (current.options.rootOutput) {
         parent = $("body");
@@ -726,18 +875,21 @@ function detect_old_ie() {
 
       oposition = current.options.position; //ocof,
 
-      reverse = current.options.lensReverse && current.options.position == 'inside';
+      reverse =
+        current.options.lensReverse && current.options.position == "inside";
 
       //Limits
-      if (current.options.smoothZoomMove < 1) current.options.smoothZoomMove = 1;
-      if (current.options.smoothLensMove < 1) current.options.smoothLensMove = 1;
+      if (current.options.smoothZoomMove < 1)
+        current.options.smoothZoomMove = 1;
+      if (current.options.smoothLensMove < 1)
+        current.options.smoothLensMove = 1;
       if (current.options.smoothScale < 1) current.options.smoothScale = 1;
 
       //smoothNormal = current.options.smoothZoomMove && current.options.smoothLensMove && current.options.smoothScale;
 
       //Adaptive
       if (current.options.adaptive) {
-        $(window).xon('load',function(){
+        $(window).xon("load", function () {
           osw = mObj.width();
           osh = mObj.height();
 
@@ -747,58 +899,72 @@ function detect_old_ie() {
       }
       current.eventdefault();
       current.eventopen(mObj);
-    }
+    };
 
-    this.destroy = function() {
+    this.destroy = function () {
       current.eventunbind();
-    }
+    };
 
-    this.closezoom = function() {
+    this.closezoom = function () {
       flag = false;
       if (current.options.fadeOut) {
-        if (current.options.title && title != '') caption_container.fadeOut(299);
-        if (current.options.position != 'inside' || current.options.position != 'fullscreen') {
+        if (current.options.title && title != "")
+          caption_container.fadeOut(299);
+        if (
+          current.options.position != "inside" ||
+          current.options.position != "fullscreen"
+        ) {
           preview.fadeOut(299);
-          source.fadeOut(300, function(){xremove()});
+          source.fadeOut(300, function () {
+            xremove();
+          });
         } else {
-          source.fadeOut(300, function(){xremove()});
+          source.fadeOut(300, function () {
+            xremove();
+          });
         }
       } else {
         xremove();
       }
-    }
+    };
 
-    this.gallery = function() {
+    this.gallery = function () {
       var g = new Array();
-      var i,j = 0;
-      for (i = cindex; i<imageGallery.length; i++) {
-        g[j] = imageGallery[i];j++;
+      var i,
+        j = 0;
+      for (i = cindex; i < imageGallery.length; i++) {
+        g[j] = imageGallery[i];
+        j++;
       }
-      for (i = 0; i<cindex; i++) {
-        g[j] = imageGallery[i];j++;
+      for (i = 0; i < cindex; i++) {
+        g[j] = imageGallery[i];
+        j++;
       }
 
-      return {index: cindex, ogallery: imageGallery, cgallery: g};
-    }
+      return { index: cindex, ogallery: imageGallery, cgallery: g };
+    };
 
     function get_title(element) {
-      var otitle = element.attr('title');
-      var xotitle = element.attr('xtitle');
+      var otitle = element.attr("title");
+      var xotitle = element.attr("xtitle");
       if (xotitle) {
         return xotitle;
       } else if (otitle) {
-        return otitle
+        return otitle;
       } else {
-        return '';
+        return "";
       }
     }
 
-    this.xappend = function(Obj) {
+    this.xappend = function (Obj) {
       var link = Obj.parent();
       //Add original image to image gallery
-      imageGallery[index] = link.attr('href');
-      link.data('xindex', index);
-      if (index == 0 && current.options.activeClass) {active = Obj; active.addClass(current.options.activeClass)}
+      imageGallery[index] = link.attr("href");
+      link.data("xindex", index);
+      if (index == 0 && current.options.activeClass) {
+        active = Obj;
+        active.addClass(current.options.activeClass);
+      }
       if (index == 0 && current.options.title) title = get_title(Obj);
       index++;
 
@@ -810,25 +976,33 @@ function detect_old_ie() {
           active = Obj;
           active.addClass(current.options.activeClass);
         }
-        cindex = $(this).data('xindex');
+        cindex = $(this).data("xindex");
         if (current.options.fadeTrans) {
           transImg = new Image();
-          transImg.src = mObj.attr('src');
+          transImg.src = mObj.attr("src");
           trans = $(transImg);
-          trans.css({position: 'absolute', top: mObj.offset().top, left: mObj.offset().left, width: mObj.width(), height: mObj.height()});
+          trans.css({
+            position: "absolute",
+            top: mObj.offset().top,
+            left: mObj.offset().left,
+            width: mObj.width(),
+            height: mObj.height(),
+          });
           $(document.body).append(trans);
-          trans.fadeOut(200, function() {trans.remove()});
+          trans.fadeOut(200, function () {
+            trans.remove();
+          });
         }
-        var _xorig = link.attr('href');
-        var _prev = Obj.attr('xpreview') || Obj.attr('src');
+        var _xorig = link.attr("href");
+        var _prev = Obj.attr("xpreview") || Obj.attr("src");
 
         title = get_title(Obj);
-        if (Obj.attr('title')) mObj.attr('title',Obj.attr('title'));
+        if (Obj.attr("title")) mObj.attr("title", Obj.attr("title"));
 
         //imgObj.attr('src',_xorig);
-        mObj.attr('xoriginal',_xorig);
-        mObj.removeAttr('style');
-        mObj.attr('src', _prev);
+        mObj.attr("xoriginal", _xorig);
+        mObj.removeAttr("style");
+        mObj.attr("src", _prev);
         if (current.options.adaptive) {
           osw = mObj.width();
           osh = mObj.height();
@@ -838,69 +1012,73 @@ function detect_old_ie() {
       }
 
       if (current.options.hover) {
-        link.xon('mouseenter', link, thumbchange);
+        link.xon("mouseenter", link, thumbchange);
       }
-      link.xon('click', link, thumbchange);
-    }
+      link.xon("click", link, thumbchange);
+    };
 
     this.init(opts);
   }
 
-    $.fn.xzoom = function(options) {
-      var mainObj;
-      var secObj;
+  $.fn.xzoom = function (options) {
+    var mainObj;
+    var secObj;
 
-      if (this.selector) {
-        var el = this.selector.split(",");
-        for (var i in el) el[i] = $.trim(el[i]);
-        this.each(function(index) {
-          if (el.length == 1) {
-            if (index == 0) {
-              //Main window element
-              mainObj = $(this);
-            if (typeof(mainObj.data('xzoom')) !== 'undefined') return mainObj.data('xzoom');
-              mainObj.x = new xobject(mainObj, options);
-            } else if(typeof(mainObj.x) !== 'undefined') {
-              //Thumbs
-              secObj = $(this);
-              mainObj.x.xappend(secObj);
-            }
-          } else {
-            if ($(this).is(el[0]) && index == 0) {
-              //Main window element
-              mainObj = $(this);
-            if (typeof(mainObj.data('xzoom')) !== 'undefined') return mainObj.data('xzoom');
-              mainObj.x = new xobject(mainObj, options);
-            } else if(typeof(mainObj.x) !== 'undefined' && !$(this).is(el[0])) {
-              //Thumbs
-              secObj = $(this);
-              mainObj.x.xappend(secObj);
-            }
+    if (this.selector) {
+      var el = this.selector.split(",");
+      for (var i in el) el[i] = $.trim(el[i]);
+      this.each(function (index) {
+        if (el.length == 1) {
+          if (index == 0) {
+            //Main window element
+            mainObj = $(this);
+            if (typeof mainObj.data("xzoom") !== "undefined")
+              return mainObj.data("xzoom");
+            mainObj.x = new xobject(mainObj, options);
+          } else if (typeof mainObj.x !== "undefined") {
+            //Thumbs
+            secObj = $(this);
+            mainObj.x.xappend(secObj);
           }
-        });
-      } else this.each(function(index) {
+        } else {
+          if ($(this).is(el[0]) && index == 0) {
+            //Main window element
+            mainObj = $(this);
+            if (typeof mainObj.data("xzoom") !== "undefined")
+              return mainObj.data("xzoom");
+            mainObj.x = new xobject(mainObj, options);
+          } else if (typeof mainObj.x !== "undefined" && !$(this).is(el[0])) {
+            //Thumbs
+            secObj = $(this);
+            mainObj.x.xappend(secObj);
+          }
+        }
+      });
+    } else
+      this.each(function (index) {
         if (index == 0) {
           //Main window element
           mainObj = $(this);
-          if (typeof(mainObj.data('xzoom')) !== 'undefined') return mainObj.data('xzoom');
+          if (typeof mainObj.data("xzoom") !== "undefined")
+            return mainObj.data("xzoom");
           mainObj.x = new xobject(mainObj, options);
-        } else if(typeof(mainObj.x) !== 'undefined') {
+        } else if (typeof mainObj.x !== "undefined") {
           //Thumbs
           secObj = $(this);
           mainObj.x.xappend(secObj);
         }
       });
-      if (typeof(mainObj) === 'undefined') return false;
-      mainObj.data('xzoom', mainObj.x);
+    if (typeof mainObj === "undefined") return false;
+    mainObj.data("xzoom", mainObj.x);
 
-      //Fire event xzoom init
-      $(mainObj).trigger('xzoom_ready');
-      return mainObj.x;
-    }
+    //Fire event xzoom init
+    $(mainObj).trigger("xzoom_ready");
+    return mainObj.x;
+  };
 
   $.fn.xzoom.defaults = {
-    position: 'right', //top, left, right, bottom, inside, lens, fullscreen, #ID
-    mposition: 'inside', //inside, fullscreen
+    position: "right", //top, left, right, bottom, inside, lens, fullscreen, #ID
+    mposition: "inside", //inside, fullscreen
     rootOutput: true,
     Xoffset: 0,
     Yoffset: 0,
@@ -917,22 +1095,22 @@ function detect_old_ie() {
     tintOpacity: 0.5,
     lens: false, //'#color'
     lensOpacity: 0.5,
-    lensShape: 'box', //'box', 'circle'
+    lensShape: "box", //'box', 'circle'
     lensCollision: true,
     lensReverse: false,
     openOnSmall: true,
-    zoomWidth: 'auto',
-    zoomHeight: 'auto',
-    sourceClass: 'xzoom-source',
-    loadingClass: 'xzoom-loading',
-    lensClass: 'xzoom-lens',
-    zoomClass: 'xzoom-preview',
-    activeClass: 'xactive',
+    zoomWidth: "auto",
+    zoomHeight: "auto",
+    sourceClass: "xzoom-source",
+    loadingClass: "xzoom-loading",
+    lensClass: "xzoom-lens",
+    zoomClass: "xzoom-preview",
+    activeClass: "xactive",
     hover: false,
     adaptive: true,
     adaptiveReverse: false,
     title: false,
-    titleClass: 'xzoom-caption',
-    bg: false //zoom image output as background
+    titleClass: "xzoom-caption",
+    bg: false, //zoom image output as background
   };
 })(jQuery);

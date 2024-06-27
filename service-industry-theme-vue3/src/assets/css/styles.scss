@@ -33,9 +33,9 @@
     
 ---------------------------------- */
 
-$PrimaryColor: #f7b035;
-$PrimaryRgbColor: rgb(247, 176, 53);
-$SecondaryColor: #232323;
+$PrimaryColor: #FF4713;
+$PrimaryRgbColor: rgb(255, 71, 19);
+$SecondaryColor: #787676;
 $SecondaryRgbColor: rgb(35, 35, 35);
 
 $desk-xxl-screen: 1599px;
@@ -11882,7 +11882,7 @@ pre[class*="language-"] {
   left: 0;
   width: calc(100% + 370px);
   height: 100%;
-  background: url(../../../public/images/icons/process-arrow-02.png) 50% 0 no-repeat;
+  background: url(../img/icons/process-arrow-02.png) 50% 0 no-repeat;
   z-index: 1;
   margin: 0 -370px;
   transform-origin: 100% 50%;
@@ -12191,7 +12191,7 @@ pre[class*="language-"] {
     top: 90px;
     height: 25px;
     width: 60px;
-    background-image: url(../../../public/images/icons/process-arrow-03.png);
+    background-image: url(../img/icons/process-arrow-03.png);
     background-repeat: no-repeat;
   }
 
@@ -12267,7 +12267,7 @@ pre[class*="language-"] {
   left: 0;
   width: calc(100% + 370px);
   height: 100%;
-  background: url(../../../public/images/icons/process-arrow-02.png) 50% 0 no-repeat;
+  background: url(../img/icons/process-arrow-02.png) 50% 0 no-repeat;
   z-index: 1;
   margin: 0 -370px;
   transform-origin: 100% 50%;

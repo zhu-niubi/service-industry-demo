@@ -29,10 +29,10 @@
 </template>
 
 <script>
-
 export default {
   name: "NotFound",
-  mounted() {
+  setup() {
+    return {};
   },
 };
 </script>

@@ -5,16 +5,15 @@
     <IndexComponent />
     <FooterComponent />
   </div>
-  <a href="#!" class="scroll-to-top"
-    ><i class="fas fa-angle-up" aria-hidden="true"></i
-  ></a>
+  <a href="#!" class="scroll-to-top">
+    <i class="fas fa-angle-up" aria-hidden="true"></i>
+  </a>
 </template>
 
 <script>
 import IndexComponent from "@/components/IndexComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
-
 
 export default {
   name: "HomeView",
@@ -23,7 +22,12 @@ export default {
     HeaderComponent,
     FooterComponent,
   },
-  mounted() {
+  setup() {
+    return {};
   },
 };
 </script>
+
+<style scoped>
+/* 添加必要的样式 */
+</style>
