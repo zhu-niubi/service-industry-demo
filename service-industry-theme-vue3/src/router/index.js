@@ -9,7 +9,7 @@ import TestView from "../views/TestView.vue";
 import TestServiceView from "../views/TestServiceView.vue";
 import TestServices1 from "../components/serviceChild/TestServices1.vue";
 import TestServices2 from "../components/serviceChild/TestServices2.vue";
-
+import SolutionView from "../views/SolutionView.vue";
 
 
 
@@ -18,6 +18,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: HomeView,
+  },
+  {
+    path: '/solution/:param',
+    name: 'Solution',
+    component: SolutionView
   },
   {
     path: "/test",

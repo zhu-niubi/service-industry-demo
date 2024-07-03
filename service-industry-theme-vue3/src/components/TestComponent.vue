@@ -58,7 +58,7 @@
                                     <div class="d-table-cell align-middle h-100 w-100">
                                         <h3 class="h4 text-white mb-0">We handle every project with care.</h3>
                                         <div class="icon d-none d-sm-block"><img
-                                                src="../assets/img/roofing/icon/icon-01.png" alt="..."></div>
+                                                src="../assets/img/icons/icon-01.png" alt="..."></div>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                                     <div class="d-table-cell align-middle h-100 w-100">
                                         <h3 class="h4 text-white mb-0">Best choice for roofing projects.</h3>
                                         <div class="icon d-none d-sm-block"><img
-                                                src="../assets/img/roofing/icon/icon-02.png" alt="..."></div>
+                                                src="../assets/img/icons/icon-02.png" alt="..."></div>
                                     </div>
                                 </div>
                             </div>
@@ -98,10 +98,10 @@ export default {
         const fromRoute = computed(() => store.state.fromRoute);
         const toRoute = computed(() => store.state.toRoute);
         const slides = ref([
-            { image: require('@/assets/img/roofing/bg/bg-01.jpg') },
-            { image: require('@/assets/img/roofing/content/content-01.jpg') },
-            { image: require('@/assets/img/roofing/content/content-02.jpg') },
-            { image: require('@/assets/img/roofing/bg/bg-05.jpg') }
+            { image: require('@/assets/img/bg/bg-01.jpg') },
+            { image: require('@/assets/img/bg/content-01.jpg') },
+            { image: require('@/assets/img/bg/content-02.jpg') },
+            { image: require('@/assets/img/bg/bg-05.jpg') }
         ]);
         onMounted(() => {
             // console.log('路由从：', fromRoute.value,'到：',toRoute.value);

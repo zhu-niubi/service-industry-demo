@@ -9,15 +9,15 @@
           <ul class="contact-list">
             <li>
               <span class="fa fa-home pe-3 text-white"></span>
-              <a href="#!">73 Canal Street, UK</a>
+              <a href="#!">{{contact_info.address}}</a>
             </li>
             <li>
               <span class="fa fa-phone pe-3 text-white"></span>
-              <a href="#!">(+44) 123 456 7892</a>
+              <a href="#!">{{contact_info.phone}}</a>
             </li>
             <li>
               <span class="fa fa-envelope pe-3 text-white"></span>
-              <a href="#!">addyour@emailhere</a>
+              <a >{{contact_info.email}}</a>
             </li>
           </ul>
         </div>
@@ -36,7 +36,7 @@
           </div>
           <div class="col-md-6 text-center text-md-end order-1 order-md-2">
             <p class="text-white d-inline-block mb-0 align-middle">
-              Follow Us:
+              {{contact_info.follow}}:
             </p>
             <ul class="footer-social-style1">
               <li>
@@ -74,8 +74,14 @@ export default {
     const { locale, t } = useI18n();
 
     const footerMenus = ref([]);
-
+    const contact_info = ref({
+      address: t("footer_menu.contact_info.address"),
+      phone: t("footer_menu.contact_info.phone"),
+      email: t("footer_menu.contact_info.email"),
+      follow: t("footer_menu.follow")
+    });
     const translateMenuItems = (items) => {
+      // console.log(items);
       return items.map(item => ({
         ...item,
         title: t(item.title),
@@ -89,7 +95,6 @@ export default {
         locale.value = savedLanguage;
       }
       footerMenus.value = translateMenuItems(originalMenuItems);
-
     };
     onMounted(() => {
       // 获取最新语言给菜单翻译
@@ -98,6 +103,7 @@ export default {
 
     return {
       footerMenus,
+      contact_info
     };
   },
 };

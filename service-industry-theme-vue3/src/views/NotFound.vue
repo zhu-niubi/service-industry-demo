@@ -11,9 +11,9 @@
                 <h3 class="text-white mb-0">Error</h3>
               </div>
               <div class="middle"></div>
-              <div class="bottom">
+              <!-- <div class="bottom">
                 <img src="images/content/error.png" alt="..." />
-              </div>
+              </div> -->
             </div>
             <h2>Oops! page not found</h2>
             <p class="lead mb-1-6 mb-md-1-9 font-weight-400">

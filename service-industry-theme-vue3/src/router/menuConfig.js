@@ -55,9 +55,9 @@ export const menuItems = [
         title: 'menu.solution.title',
         link: '#!',
         submenu: [
-            { title: 'menu.solution.project3Column', link: 'project-3-column.html' },
-            { title: 'menu.solution.project4Column', link: 'project-4-column.html' },
-            { title: 'menu.solution.projectDetails', link: 'project-details.html' },
+            { title: 'menu.solution.project1', link: "/solution/Invisible-livery.html" },
+            { title: 'menu.solution.project2', link: 'project-4-column.html' },
+            { title: 'menu.solution.project3', link: 'project-details.html' },
         ],
     },
     {

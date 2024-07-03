@@ -37,9 +37,9 @@
     },
     "solution": {
       "title": "Solution",
-      "project3Column": "Project 3 Column",
-      "project4Column": "Project 4 Column",
-      "projectDetails": "Project Details"
+      "project1": "Invisible livery",
+      "project2": "Genuine lacquer livery",
+      "project3": "Skylight Ice Armor"
     },
     "career": {
       "title": "Career",
@@ -55,6 +55,11 @@
     "contact": "Contact"
   },
   "footer_menu": {
+    "contact_info": {
+      "address": "Unit A, 15th Floor, Building 6 (Building D), No. 2337 Gudai Road, Minhang District, Shanghai",
+      "phone": "021-61159812",
+      "email": "1006019xxx"
+    },
     "company": {
       "title": "Company",
       "about_us": "About Us",
@@ -68,6 +73,7 @@
       "testimonial": "Testimonial",
       "pricing": "Pricing",
       "our_process": "Our Process"
-    }
+    },
+    "follow": "Follow Us"
   }
 }

@@ -37,9 +37,9 @@
     },
     "solution": {
       "title": "解决方案",
-      "project3Column": "项目三列",
-      "project4Column": "项目四列",
-      "projectDetails": "项目详情"
+      "project1": "隐形车衣",
+      "project2": "真漆车衣",
+      "project3": "天窗冰甲"
     },
     "career": {
       "title": "职业生涯",
@@ -55,6 +55,11 @@
     "contact": "联系我们"
   },
   "footer_menu": {
+    "contact_info": {
+      "address": "上海市闵行区顾戴路2337号6幢（D栋）15层A单元",
+      "phone": "021-61159812",
+      "email": "284811xxxx"
+    },
     "company": {
       "title": "公司",
       "about_us": "关于我们",
@@ -68,6 +73,7 @@
       "testimonial": "客户评价",
       "pricing": "定价",
       "our_process": "流程"
-    }
+    },
+    "follow": "关注我"
   }
 }

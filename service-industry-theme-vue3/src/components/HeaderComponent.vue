@@ -1,5 +1,5 @@
 <template>
-  <header class="header-style1 menu_area-light">
+  <header class="header-style1 menu_area-light" style="background-color: #000 !important;">
     <div class="navbar-default border-color-light-white">
       <div class="container-fluid px-lg-1-6 px-xl-2-5 px-xxl-2-9">
         <div class="row align-items-center">
@@ -12,25 +12,27 @@
                   </a>
                 </div>
 
-                <div class="navbar-toggler" style="background-color: #000 !important;"></div>
+                <div class="navbar-toggler"></div>
 
                 <ul class="navbar-nav ms-auto" id="nav" style="display: none">
                   <menu-item v-for="(item, index) in menuItems" :key="index" :item="item" />
                   <li>
                     <a href="#!">{{ $t('language') }}</a>
                     <ul>
-                      <li class="country-flex"><a href="#" @click="changeLanguage('en')">English</a><img src="../assets/img/country/eg.svg" alt="Icon" width="20"></li>
-                      <li class="country-flex"><a href="#" @click="changeLanguage('zh')">中文</a><img src="../assets/img/country/cn.svg" alt="Icon" width="20"></li>
+                      <li class="country-flex"><a href="#" @click="changeLanguage('en')">English</a><img
+                          src="../assets/img/country/us.svg" alt="Icon" width="20"></li>
+                      <li class="country-flex"><a href="#" @click="changeLanguage('zh')">中文</a><img
+                          src="../assets/img/country/cn.svg" alt="Icon" width="20"></li>
                     </ul>
                   </li>
                 </ul>
-
+                <!-- 联系我们 -->
                 <div class="attr-nav align-items-lg-center ms-lg-auto main-font">
                   <ul>
                     <li class="d-none d-xl-inline-block">
-                      <a href="contactus.html" class="butn medium">
+                      <!-- <a href="contactus.html" class="butn medium">
                         <span>{{ $t('menu.contact') }}</span>
-                      </a>
+                      </a> -->
                     </li>
                   </ul>
                 </div>
@@ -58,7 +60,7 @@ export default {
   },
   setup() {
     const { locale, t } = useI18n();
-    
+
     const menuItems = ref([]);
 
     const translateMenuItems = (items) => {

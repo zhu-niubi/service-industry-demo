@@ -5,7 +5,7 @@
                 <div v-for="(slide, index) in slides" :key="index"
                     class="text-start item bg-img cover-background theme-overlay-blue-dark"
                     :data-background="slide.image">
-                    <div class="container h-100">
+                    <div class="container h-100 ">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <div class="w-95 w-md-85 w-lg-70 w-xxl-65 mt-5 mt-sm-0">
